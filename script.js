@@ -1,1 +1,0 @@
-fitText(document.querySelector(".falling_letters"), 0.38);
