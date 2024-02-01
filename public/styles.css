@@ -1,8 +1,61 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap');
-html {
+
+/**
+* For opening animation
+*
+*/
+
+#bouncingBall {
+  width: 50px;
+  height: 50px;
+  background-color: #fac5a3;
+  border-radius: 50%;
+  position: absolute;
 }
+
+.balls {
+  width: 100px;
+  height: 100px;
+  background-color: #fac5a3;
+  border-radius: 50%;
+  position: absolute;
+}
+
+body {
+  background-color: black;
+}
+
+#name {
+  font-family: 'Kaushan Script', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 15vw;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: rgba(0, 0, 0, 0.8);
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  z-index: 98;
+  opacity: 0.25;
+}
+
+#skipAnimation {
+  z-index: 99;
+  position: absolute;
+
+}
+
+/** 
+* End opening animation
+*/
+
+
 body {
     font-family: 'Muli', sans-serif;
     color: rgba(0, 0, 0, 0.8);
@@ -18,6 +71,9 @@ body {
   
 }
 
+#cv {
+  display: none;
+}
 
 /* Start navbar
 *
@@ -161,29 +217,14 @@ input, textarea {
   /* Add a dark-grey background on hover */
 }
 
+::placeholder {
+
+  padding: 10px;
+
+}
 
     @media screen and (max-width: 600px) {
-        .falling_letters {
-          /* font-size: 4vw; */
-          grid-template-columns: 1fr;
-          gap: 0;
-          grid-template-rows: 1fr 1fr;
-        }
-
-        .fl1 {
-            /* display: grid; */
-            /* width: 100%; */
-            /* border: 1px black solid; */
-            text-align: center;
         
-            grid-template-rows: auto;
-        }
-        
-        .fl2 {
-            display: grid;
-            text-align: center;
-            /* border: 1px black solid; */
-        }
 
         nav li {
             width: 100%;
@@ -220,5 +261,10 @@ input, textarea {
                   width: 75%;
                   font-size: 75%;
                 }
+
+
+                
+
+                
 
       }
