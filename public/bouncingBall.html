@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bouncing Ball with JavaScript</title>
+    <style>
+        #bouncingBall {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        body {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bouncingBall"></div>
+
+
+    
+    <script>
+        const bouncingBall = document.getElementById("bouncingBall");
+
+        let screenWidth = window.innerWidth;
+        let screenHeight = window.innerHeight;
+
+
+        // ball will bounce 5 times, peaking at 80%, 60%, 40%, 20%, then 0% of max height 
+        // width of full curve is 10% of screen width
+        // max height is ?60%? of screen height
+        // bounce path will be quadratic functions, peak = vertex
+        // first curve: (-screenWidth * 0.05, screenHeight), vertex (0, screenHeight * 0.6), (screenWidth * 0.05, screenHeight)
+        // second curve: (screenWidth * 0.05, screenHeight), vertex (screenWidth * 0.1, screenHeight * 0.6 * 0.8), (screenWidth * 0.15, screenHeight)
+        // third curve: (screenWidth * 0.15, screenHeight), vertex (screenWidth * 0.2, screenHeight * 0.6 * 0.6), (screenWidth * 0.25, screenHeight)
+        // fourth curve: (screenWidth * 0.25, screenHeight), vertex (screenWidth * 0.3, screenHeight * 0.6 * 0.4), (screenWidth * 0.35, screenHeight)
+        // fifth curve: (screenWidth * 0.35, screenHeight), vertex (screenWidth * 0.4, screenHeight * 0.6 * 0.2), (screenWidth * 0.45, screenHeight)
+        // sixth curve: (screenWidth * 0.45, screenHeight), vertex (screenWidth * 0.5, screenHeight * 0.6 * * 0.0), (screenWidth * 0.55, screenHeight)
+        // start with 100 points btwn starting pt and vertex
+
+        
+        let bouncingBallStartX = 0;
+        let bouncingBallStartY = screenHeight * 0.40;
+
+        let movingBallX = bouncingBallStartX;
+        let movingBallY = bouncingBallStartY;
+
+        let curveWidth = screenWidth * 0.1;
+        let curveHeight;
+
+        let numVerticalBalls;
+
+        let xSpeed = screenWidth * 0.0025;
+        let ySpeed;
+        // let yShouldDecrease = true;
+        let countCurve = 0;
+        let xAtCurveHeight;
+        let xAtScreenHeight;
+
+
+        function solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight) {
+            // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
+            // Solve for a
+            // a = (y - vertexY) / ( (x - vertexX) * (x - vertexX))
+            console.log("In solve a, curveHeigh = " + curveHeight)
+            return (screenHeight - 50 - curveHeight)/((xAtScreenHeight - xAtCurveHeight) ** 2);
+        }
+
+        function getY (aValue, xValue, curveHeight, xAtCurveHeight ) {
+            // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
+            
+            return aValue * ((xValue - xAtCurveHeight) ** 2) + curveHeight;
+        }
+
+
+        function animate() {
+
+            if (movingBallX == 0) { // first curve
+                console.log("***********\n**************")
+                curveHeight = bouncingBallStartY;
+                xAtCurveHeight = 0;
+                xAtScreenHeight = screenWidth * 0.05;
+                // let numVerticalBalls = curveHeight / 50;
+
+                // let xSpeed = (curveWidth / 2) / numVerticalBalls;
+                // let ySpeed = 10;
+                // let yShouldDecrease = true;
+                // let countCurve = 0;
+            }
+
+            if (curveHeight >= screenHeight) {
+                return; // end movement
+            }
+
+            movingBallX += xSpeed;
+            movingBallY = getY(solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight), movingBallX, curveHeight, xAtCurveHeight);
+
+
+            if (movingBallY + 50 >= screenHeight) {
+                curveHeight = curveHeight + bouncingBallStartY * 0.2;
+                xAtCurveHeight = xAtCurveHeight + screenWidth * 0.1;
+                xAtScreenHeight = xAtScreenHeight + screenWidth * 0.1;
+                movingBallY = screenHeight - 50;
+                console.log("Here");
+            }
+            // } else if (movingBallY - ySpeed < curveHeight && movingBallX != 0) {
+            //     ySpeed = -ySpeed;
+            //     console.log("Oops");
+            // } 
+
+            // movingBallX+= xSpeed;
+            // movingBallY+= ySpeed;
+            // if (movingBallX+ 50 > window.innerWidth || movingBallX< 0) {
+                // xSpeed = -xSpeed;
+            // }
+            // if (movingBallY+ 50 > window.innerHeight || movingBallY< 0) {
+                // ySpeed = -ySpeed;
+            // }
+            // if (mo)
+
+            bouncingBall.style.left = movingBallX+ "px";
+            bouncingBall.style.top = movingBallY+ "px";
+            console.log("y = " + movingBallY + "\nx = " + movingBallX);
+            // console.log("curveHeight = " + curveHeight + "\nx = " + movingBallX);
+            console.log("curveHeight = " + curveHeight );
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>
