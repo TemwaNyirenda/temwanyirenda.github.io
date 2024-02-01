@@ -4,21 +4,59 @@
 <head>
     <title>Bouncing Ball with JavaScript</title>
     <style>
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap');
+
         #bouncingBall {
             width: 50px;
             height: 50px;
-            background-color: red;
+            background-color: #fac5a3;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .balls {
+            width: 100px;
+            height: 100px;
+            background-color: #fac5a3;
             border-radius: 50%;
             position: absolute;
         }
 
         body {
-            color: gray;
+            background-color: black;
         }
+
+        #name {
+            font-family: 'Kaushan Script', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 15vw;
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            color: rgba(0, 0, 0, 0.8);
+            -webkit-font-smoothing: antialiased;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            z-index: 98;
+            opacity: 0.25;
+        }
+        
+        #skipAnimation {
+            z-index: 99;
+            position: absolute;
+
+        }
+
+
     </style>
 </head>
 
 <body>
+    <button onclick="skipFunction()" id="skipAnimation" title="Skip Animation">Skip Animation</button>
+    <div id="name"></div>
     <div id="bouncingBall"></div>
 
 
@@ -30,19 +68,6 @@
         let screenHeight = window.innerHeight;
 
 
-        // ball will bounce 5 times, peaking at 80%, 60%, 40%, 20%, then 0% of max height 
-        // width of full curve is 10% of screen width
-        // max height is ?60%? of screen height
-        // bounce path will be quadratic functions, peak = vertex
-        // first curve: (-screenWidth * 0.05, screenHeight), vertex (0, screenHeight * 0.6), (screenWidth * 0.05, screenHeight)
-        // second curve: (screenWidth * 0.05, screenHeight), vertex (screenWidth * 0.1, screenHeight * 0.6 * 0.8), (screenWidth * 0.15, screenHeight)
-        // third curve: (screenWidth * 0.15, screenHeight), vertex (screenWidth * 0.2, screenHeight * 0.6 * 0.6), (screenWidth * 0.25, screenHeight)
-        // fourth curve: (screenWidth * 0.25, screenHeight), vertex (screenWidth * 0.3, screenHeight * 0.6 * 0.4), (screenWidth * 0.35, screenHeight)
-        // fifth curve: (screenWidth * 0.35, screenHeight), vertex (screenWidth * 0.4, screenHeight * 0.6 * 0.2), (screenWidth * 0.45, screenHeight)
-        // sixth curve: (screenWidth * 0.45, screenHeight), vertex (screenWidth * 0.5, screenHeight * 0.6 * * 0.0), (screenWidth * 0.55, screenHeight)
-        // start with 100 points btwn starting pt and vertex
-
-        
         let bouncingBallStartX = 0;
         let bouncingBallStartY = screenHeight * 0.40;
 
@@ -56,17 +81,24 @@
 
         let xSpeed = screenWidth * 0.0025;
         let ySpeed;
-        // let yShouldDecrease = true;
-        let countCurve = 0;
         let xAtCurveHeight;
         let xAtScreenHeight;
+
+        let bouncingBallWidth = 50;
+        let bouncingBallHeight = 50;
+
+        let ballsCount = 1;
+
+        let nameOpacity = 0.25;
+
+        let colours = ["#acfaa3", "#a3d8fa", "#f0a3fa", "#faa3a4", "#faf0a3", "#c5a3fa"];
+
 
 
         function solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight) {
             // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
             // Solve for a
             // a = (y - vertexY) / ( (x - vertexX) * (x - vertexX))
-            console.log("In solve a, curveHeigh = " + curveHeight)
             return (screenHeight - 50 - curveHeight)/((xAtScreenHeight - xAtCurveHeight) ** 2);
         }
 
@@ -80,20 +112,14 @@
         function animate() {
 
             if (movingBallX == 0) { // first curve
-                console.log("***********\n**************")
                 curveHeight = bouncingBallStartY;
                 xAtCurveHeight = 0;
                 xAtScreenHeight = screenWidth * 0.05;
-                // let numVerticalBalls = curveHeight / 50;
-
-                // let xSpeed = (curveWidth / 2) / numVerticalBalls;
-                // let ySpeed = 10;
-                // let yShouldDecrease = true;
-                // let countCurve = 0;
             }
 
             if (curveHeight >= screenHeight) {
-                return; // end movement
+                zoomBouncingBall();
+                return;
             }
 
             movingBallX += xSpeed;
@@ -105,30 +131,101 @@
                 xAtCurveHeight = xAtCurveHeight + screenWidth * 0.1;
                 xAtScreenHeight = xAtScreenHeight + screenWidth * 0.1;
                 movingBallY = screenHeight - 50;
-                console.log("Here");
             }
-            // } else if (movingBallY - ySpeed < curveHeight && movingBallX != 0) {
-            //     ySpeed = -ySpeed;
-            //     console.log("Oops");
-            // } 
-
-            // movingBallX+= xSpeed;
-            // movingBallY+= ySpeed;
-            // if (movingBallX+ 50 > window.innerWidth || movingBallX< 0) {
-                // xSpeed = -xSpeed;
-            // }
-            // if (movingBallY+ 50 > window.innerHeight || movingBallY< 0) {
-                // ySpeed = -ySpeed;
-            // }
-            // if (mo)
 
             bouncingBall.style.left = movingBallX+ "px";
             bouncingBall.style.top = movingBallY+ "px";
-            console.log("y = " + movingBallY + "\nx = " + movingBallX);
-            // console.log("curveHeight = " + curveHeight + "\nx = " + movingBallX);
-            console.log("curveHeight = " + curveHeight );
             requestAnimationFrame(animate);
         }
+
+        function zoomBouncingBall() {
+            if (movingBallX <= 0 || movingBallY <= 0 ) {
+                document.body.style.backgroundColor = "#fac5a3"
+                insertName();
+                addBalls();
+                return;
+            }
+
+            bouncingBallWidth += 50;
+            bouncingBallHeight += 50;
+            movingBallX -= 50;
+            movingBallY -= 50;
+
+
+            bouncingBall.style.width = bouncingBallWidth + "px";
+            bouncingBall.style.height = bouncingBallHeight + "px";
+            bouncingBall.style.left = movingBallX + "px";
+            bouncingBall.style.top = movingBallY + "px";
+            requestAnimationFrame(zoomBouncingBall);
+        }
+
+        function insertName() {
+            let name = document.getElementById("name");
+
+            name.style.opacity = 0.25;
+
+            const nameContent = document.createTextNode("Temwa Nyirenda");
+
+            name.appendChild(nameContent);
+
+            
+            return;
+
+        }
+        
+        
+        function addBalls() {
+
+            if (ballsCount >= 500) {
+                skipFunction()
+                return;
+            }
+
+            let sizes = [50, 100, 250, 500]
+            const newBall = document.createElement("div");
+
+            newBall.setAttribute("class", "balls")
+            newBall.setAttribute("id", "ball" + ballsCount)
+            newBall.style.right = Math.floor(Math.random() * screenWidth) + "px";
+            newBall.style.bottom = Math.floor(Math.random() * screenHeight) + "px";
+
+            
+            newBall.style.backgroundColor = colours[Math.floor(Math.random() * 6)];
+            
+            let randomSize = sizes[Math.floor(Math.random() * 4)];
+            newBall.style.width =  randomSize + "px";
+            newBall.style.height = randomSize + "px";
+            
+            bouncingBall.style.opacity = 0;
+            document.body.insertBefore(newBall, bouncingBall);
+            
+
+            let name = document.getElementById("name");
+            nameOpacity += 0.05;
+            name.style.opacity = nameOpacity;
+
+
+            ballsCount++;
+            requestAnimationFrame(addBalls);
+        }
+
+        function skipFunction() {
+            let name = document.getElementById("name");
+            let skipAnimation = document.getElementById("skipAnimation");
+            let balls = document.getElementsByClassName("balls");
+
+            name.style.display = "none";
+            bouncingBall.style.display = "none";
+            skipAnimation.style.display = "none";
+
+            colours = [];
+
+             for (i = 0; i < balls.length; i++) {
+                balls[i].style.display = "none";
+            }
+            } 
+
+
 
         animate();
     </script>

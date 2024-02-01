@@ -38,15 +38,15 @@ const db = getDatabase();
 
 // const form = document.querySelector('#contact_form')
 
-var fname = document.querySelector("#fname");
-var lname = document.querySelector("#lname");
-var email = document.querySelector("#email");
-var phone = document.querySelector("#phone");
-var message = document.querySelector("#message");
+let fname = document.querySelector("#fname");
+let lname = document.querySelector("#lname");
+let email = document.querySelector("#email");
+let phone = document.querySelector("#phone");
+let message = document.querySelector("#message");
 
 console.log(fname + lname+ email);
 
-var submitBtn = document.querySelector("#submit");
+let submitBtn = document.querySelector("#submit");
 
 function InsertData() {
 
@@ -94,7 +94,7 @@ submitBtn.addEventListener('click', InsertData);
 
 
 
-var mybutton = document.getElementById("myBtn");
+let mybutton = document.getElementById("myBtn");
 
 window.onscroll = function () { scrollFunction() };
 
@@ -120,7 +120,7 @@ mybutton.addEventListener('click', topFunction);
 
 //     get(child(dbRef, "Contact"))
 //     .then((snapshot) => {
-//         var contacts = [];
+//         let contacts = [];
 
 //         snapshot.forEach(childSnapshot => {
 //             contacts.push(childSnapshot.val());
