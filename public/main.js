@@ -1,8 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-analytics.js";
-import { getDatabase, ref, get, set, child, update, remove } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
 
 const firebaseConfig = {
@@ -31,7 +30,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const analytics = getAnalytics(app);
 
 
 const db = getDatabase();
@@ -121,8 +119,6 @@ mybutton.addEventListener('click', topFunction);
 
 const bouncingBall = document.getElementById("bouncingBall");
 
-        let screenWidth = window.innerWidth;
-        let screenHeight = window.innerHeight;
 
 
         let bouncingBallStartX = 0;
