@@ -199,8 +199,8 @@ input, textarea {
 #myBtn {
   display: none;
   position: fixed;
-  /* bottom: 20px; */
-  /* right: 30px; */
+  bottom: 20px;
+  right: 30px;
   z-index: 99;
   border: #333 1px solid;
   outline: none;
@@ -217,11 +217,6 @@ input, textarea {
   /* Add a dark-grey background on hover */
 }
 
-::placeholder {
-
-  padding: 10px;
-
-}
 
     @media screen and (max-width: 600px) {
         
@@ -261,10 +256,6 @@ input, textarea {
                   width: 75%;
                   font-size: 75%;
                 }
-
-
-                
-
                 
 
       }
