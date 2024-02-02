@@ -87,8 +87,8 @@ function validateForm() {
 
 submitBtn.addEventListener('click', InsertData);
 
-
-
+let screenWidth = window.innerWidth;
+let screenHeight = window.innerHeight;
 
 let mybutton = document.getElementById("myBtn");
 
@@ -97,6 +97,8 @@ window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         mybutton.style.display = "block";
+        mybutton.style.right = (screenWidth - 20)+ "px";
+            mybutton.style.bottom = (screenHeight - 20)+ "px";
     } else {
         mybutton.style.display = "none";
     }

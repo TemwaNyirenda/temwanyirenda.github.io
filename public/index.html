@@ -138,10 +138,10 @@
                 <input type="text" id="lname" placeholder="Your last name...">
 
                 <p>Email Address</p>
-                <input type="email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" id="email" placeholder="Your email address...">
+                <input type="email" type="email" id="email" placeholder="Your email address...">
 
                 <p>Phone Number</p>
-                <input type="text" id="phone" placeholder="Your phone number...">
+                <input type="number" id="phone"  type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 
                 <p>Message</p>
                 <textarea id="message" placeholder="Write something.." style="height:200px"></textarea>
