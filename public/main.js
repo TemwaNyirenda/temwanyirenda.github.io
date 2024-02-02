@@ -95,8 +95,8 @@ window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         mybutton.style.display = "block";
-        mybutton.style.right = (screenWidth - 20)+ "px";
-            mybutton.style.bottom = (screenHeight - 20)+ "px";
+        mybutton.style.right = (screenWidth - 100)+ "px";
+            mybutton.style.bottom = (screenHeight - 100)+ "px";
     } else {
         mybutton.style.display = "none";
     }
