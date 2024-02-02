@@ -73,14 +73,14 @@ function validateForm() {
     if (email.value == "" && phone.value == "") {
         alert("Email and phone cannot both be blank");
         return false;
-    } 
+    }
     if (message.value == "") {
         alert("Need to fill out message");
         return false;
     }
 
     return true;
-} 
+}
 
 
 submitBtn.addEventListener('click', InsertData);
@@ -96,7 +96,7 @@ function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         mybutton.style.display = "block";
         // mybutton.style.right = (screenWidth - 20)+ "px";
-            // mybutton.style.bottom = (screenHeight - 20)+ "px";
+        // mybutton.style.bottom = (screenHeight - 20)+ "px";
     } else {
         mybutton.style.display = "none";
     }
@@ -105,7 +105,7 @@ function scrollFunction() {
 function topFunction() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-} 
+}
 
 mybutton.addEventListener('click', topFunction);
 
@@ -121,173 +121,173 @@ const bouncingBall = document.getElementById("bouncingBall");
 
 
 
-        let bouncingBallStartX = 0;
-        let bouncingBallStartY = screenHeight * 0.40;
+let bouncingBallStartX = 0;
+let bouncingBallStartY = screenHeight * 0.40;
 
-        let movingBallX = bouncingBallStartX;
-        let movingBallY = bouncingBallStartY;
+let movingBallX = bouncingBallStartX;
+let movingBallY = bouncingBallStartY;
 
-        let curveWidth = screenWidth * 0.1;
-        let curveHeight;
+let curveWidth = screenWidth * 0.1;
+let curveHeight;
 
-        let numVerticalBalls;
+let numVerticalBalls;
 
-        let xSpeed = screenWidth * 0.0025;
-        let ySpeed;
-        let xAtCurveHeight;
-        let xAtScreenHeight;
+let xSpeed = screenWidth * 0.0025;
+let ySpeed;
+let xAtCurveHeight;
+let xAtScreenHeight;
 
-        let bouncingBallWidth = 50;
-        let bouncingBallHeight = 50;
+let bouncingBallWidth = 50;
+let bouncingBallHeight = 50;
 
-        let ballsCount = 1;
+let ballsCount = 1;
 
-        let nameOpacity = 0.25;
+let nameOpacity = 0.25;
 
-        let colours = ["#acfaa3", "#a3d8fa", "#f0a3fa", "#faa3a4", "#faf0a3", "#c5a3fa"];
-
-
-
-        function solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight) {
-            // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
-            // Solve for a
-            // a = (y - vertexY) / ( (x - vertexX) * (x - vertexX))
-            return (screenHeight - 50 - curveHeight)/((xAtScreenHeight - xAtCurveHeight) ** 2);
-        }
-
-        function getY (aValue, xValue, curveHeight, xAtCurveHeight ) {
-            // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
-            
-            return aValue * ((xValue - xAtCurveHeight) ** 2) + curveHeight;
-        }
+let colours = ["#acfaa3", "#a3d8fa", "#f0a3fa", "#faa3a4", "#faf0a3", "#c5a3fa"];
 
 
-        function animate() {
 
-            if (movingBallX == 0) { // first curve
-                curveHeight = bouncingBallStartY;
-                xAtCurveHeight = 0;
-                xAtScreenHeight = screenWidth * 0.05;
-            }
+function solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight) {
+    // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
+    // Solve for a
+    // a = (y - vertexY) / ( (x - vertexX) * (x - vertexX))
+    return (screenHeight - 50 - curveHeight) / ((xAtScreenHeight - xAtCurveHeight) ** 2);
+}
 
-            if (curveHeight >= screenHeight) {
-                zoomBouncingBall();
-                return;
-            }
+function getY(aValue, xValue, curveHeight, xAtCurveHeight) {
+    // Quadratic equation  y = a * (x - vertexX) * (x - vertexX) + vertexY
 
-            movingBallX += xSpeed;
-            movingBallY = getY(solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight), movingBallX, curveHeight, xAtCurveHeight);
+    return aValue * ((xValue - xAtCurveHeight) ** 2) + curveHeight;
+}
 
 
-            if (movingBallY + 50 >= screenHeight) {
-                curveHeight = curveHeight + bouncingBallStartY * 0.2;
-                xAtCurveHeight = xAtCurveHeight + screenWidth * 0.1;
-                xAtScreenHeight = xAtScreenHeight + screenWidth * 0.1;
-                movingBallY = screenHeight - 50;
-            }
+function animate() {
 
-            bouncingBall.style.left = movingBallX+ "px";
-            bouncingBall.style.top = movingBallY+ "px";
-            requestAnimationFrame(animate);
-        }
+    if (movingBallX == 0) { // first curve
+        curveHeight = bouncingBallStartY;
+        xAtCurveHeight = 0;
+        xAtScreenHeight = screenWidth * 0.05;
+    }
 
-        function zoomBouncingBall() {
-            if (movingBallX <= 0 || movingBallY <= 0 ) {
-                document.body.style.backgroundColor = "#fac5a3"
-                insertName();
-                addBalls();
-                return;
-            }
+    if (curveHeight >= screenHeight) {
+        zoomBouncingBall();
+        return;
+    }
 
-            bouncingBallWidth += 50;
-            bouncingBallHeight += 50;
-            movingBallX -= 50;
-            movingBallY -= 50;
+    movingBallX += xSpeed;
+    movingBallY = getY(solveForA(curveHeight, xAtCurveHeight, xAtScreenHeight), movingBallX, curveHeight, xAtCurveHeight);
 
 
-            bouncingBall.style.width = bouncingBallWidth + "px";
-            bouncingBall.style.height = bouncingBallHeight + "px";
-            bouncingBall.style.left = movingBallX + "px";
-            bouncingBall.style.top = movingBallY + "px";
-            requestAnimationFrame(zoomBouncingBall);
-        }
+    if (movingBallY + 50 >= screenHeight) {
+        curveHeight = curveHeight + bouncingBallStartY * 0.2;
+        xAtCurveHeight = xAtCurveHeight + screenWidth * 0.1;
+        xAtScreenHeight = xAtScreenHeight + screenWidth * 0.1;
+        movingBallY = screenHeight - 50;
+    }
 
-        function insertName() {
-            let name = document.getElementById("name");
+    bouncingBall.style.left = movingBallX + "px";
+    bouncingBall.style.top = movingBallY + "px";
+    requestAnimationFrame(animate);
+}
 
-            name.style.opacity = 0.25;
+function zoomBouncingBall() {
+    if (movingBallX <= 0 || movingBallY <= 0) {
+        document.body.style.backgroundColor = "#fac5a3"
+        insertName();
+        addBalls();
+        return;
+    }
 
-            const nameContent = document.createTextNode("Temwa Nyirenda");
+    bouncingBallWidth += 50;
+    bouncingBallHeight += 50;
+    movingBallX -= 50;
+    movingBallY -= 50;
 
-            name.appendChild(nameContent);
 
-            
-            return;
+    bouncingBall.style.width = bouncingBallWidth + "px";
+    bouncingBall.style.height = bouncingBallHeight + "px";
+    bouncingBall.style.left = movingBallX + "px";
+    bouncingBall.style.top = movingBallY + "px";
+    requestAnimationFrame(zoomBouncingBall);
+}
 
-        }
-        
-        
+function insertName() {
+    let name = document.getElementById("name");
+
+    name.style.opacity = 0.25;
+
+    const nameContent = document.createTextNode("Temwa Nyirenda");
+
+    name.appendChild(nameContent);
+
+
+    return;
+
+}
+
+
 function addBalls() {
-            
+
     if (colours.length === 0) {
         return;
     }
 
-            if (ballsCount >= 500) {
-                skipFunction()
-                return;
-            }
+    if (ballsCount >= 500) {
+        skipFunction()
+        return;
+    }
 
-            let sizes = [50, 100, 250, 500]
-            const newBall = document.createElement("div");
+    let sizes = [50, 100, 250, 500]
+    const newBall = document.createElement("div");
 
-            newBall.setAttribute("class", "balls")
-            newBall.setAttribute("id", "ball" + ballsCount)
-            newBall.style.right = Math.floor(Math.random() * screenWidth) + "px";
-            newBall.style.bottom = Math.floor(Math.random() * screenHeight) + "px";
-
-            
-            newBall.style.backgroundColor = colours[Math.floor(Math.random() * 6)];
-            
-            let randomSize = sizes[Math.floor(Math.random() * 4)];
-            newBall.style.width =  randomSize + "px";
-            newBall.style.height = randomSize + "px";
-            
-            bouncingBall.style.opacity = 0;
-            document.body.insertBefore(newBall, bouncingBall);
-            
-
-            let name = document.getElementById("name");
-            nameOpacity += 0.05;
-            name.style.opacity = nameOpacity;
+    newBall.setAttribute("class", "balls")
+    newBall.setAttribute("id", "ball" + ballsCount)
+    newBall.style.right = Math.floor(Math.random() * screenWidth) + "px";
+    newBall.style.bottom = Math.floor(Math.random() * screenHeight) + "px";
 
 
-            ballsCount++;
-            requestAnimationFrame(addBalls);
-        }
+    newBall.style.backgroundColor = colours[Math.floor(Math.random() * 6)];
 
-        function skipFunction() {
-            let name = document.getElementById("name");
-            let skipAnimation = document.getElementById("skipAnimation");
-            let balls = document.getElementsByClassName("balls");
+    let randomSize = sizes[Math.floor(Math.random() * 4)];
+    newBall.style.width = randomSize + "px";
+    newBall.style.height = randomSize + "px";
 
-            name.style.display = "none";
-            bouncingBall.style.display = "none";
-            skipAnimation.style.display = "none";
+    bouncingBall.style.opacity = 0;
+    document.body.insertBefore(newBall, bouncingBall);
 
-            colours = [];
 
-             for (let i = 0; i < balls.length; i++) {
-                balls[i].style.display = "none";
-            }
+    let name = document.getElementById("name");
+    nameOpacity += 0.05;
+    name.style.opacity = nameOpacity;
 
-            let cv = document.getElementById("cv");
-            cv.style.display = "block";
 
-            } 
+    ballsCount++;
+    requestAnimationFrame(addBalls);
+}
+
+function skipFunction() {
+    let name = document.getElementById("name");
+    let skipAnimation = document.getElementById("skipAnimation");
+    let balls = document.getElementsByClassName("balls");
+
+    name.style.display = "none";
+    bouncingBall.style.display = "none";
+    skipAnimation.style.display = "none";
+
+    colours = [];
+
+    for (let i = 0; i < balls.length; i++) {
+        balls[i].style.display = "none";
+    }
+
+    let cv = document.getElementById("cv");
+    cv.style.display = "block";
+
+}
 let skipAnimationBtn = document.getElementById("skipAnimation");
 skipAnimationBtn.addEventListener('click', skipFunction);
 
 
 
-        animate();
+animate();
